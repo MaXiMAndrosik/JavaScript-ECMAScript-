@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="field-wrapper">
+        <label>First name</label><span class="required">*</span>
+        <input type="text">
+    </div>
+    <div class="field-wrapper">
+        <label>Last name</label>
+        <input type="text">
+    </div>
+    <div class="fieldset">
+        <div class="field-wrapper">
+            <label>State - Province</label><span class="required">*</span>
+            <input type="text">
+        </div>
+        <div class="field-wrapper">
+            <label>Street</label><span class="required">*</span>
+            <input type="text">
+        </div>
+        <div class="field-wrapper">
+            <label>House</label><span class="required">*</span>
+            <input type="text">
+        </div>
+    </div>
+
+    <script>
+        // ------------------------------------------------------------------------------------------------
+        const createCounter = () => {
+            let counter = 0;
+            return () => {
+                return ++counter;
+            }
+        }
+        // Создаем счетчик.
+        const counter1 = createCounter();
+        counter1(); // 1
+        counter1(); // 2
+        //Создадим еще один счетчик. Каждый будет работать независимо.
+        const counter2 = createCounter();
+        counter2(); // 1
+        counter1(); // 3
+
+        // ------------------------------------------------------------------------------------------------
+
+        const lastName = "Petrov";
+        // lexical environment: { lastName: "Petrov" }
+        const getFullName = (firstName) => {
+            // lexical environment: { lastName: "Petrov", firstName:
+            // <определяется в момент вызова функции> }
+            const fullName = firstName + ' ' + lastName;
+            // lexical environment: {lastName: "Petrov", firstName:
+            // <определяется в момент вызова функции>, fullName: <вычисляется в
+            // момент вызова функции> }
+            console.log(fullName);
+            return fullName;
+        };
+
+        getFullName("Ivan"); // Ivan Petrov
+        // lexical environment в момент вызова функции становится таким:
+        // {lastName: "Petrov", firstName: "Ivan", fullName: "Ivan Petrov"
+
+        // ------------------------------------------------------------------------------------------------
+
+        const houses = [];
+        let i = 0;
+        while (i < 10) {
+            let houseNumber = i; // Здесь мы создаём блочную переменную,
+            // которая сохранит значение i для конкретной итерации цикла, и
+            // именно её значение попадёт в лексическое окружение функции house.
+            let house = function () { // функция «дом»
+                console.log(houseNumber); // выводит номер дома
+            };
+            houses.push(house);
+            i++;
+        }
+        houses[0](); // 0 — у нулевого дома номер 0
+        houses[7](); // 7 — и у седьмого дома номер 7
+
+        const houses2 = [];
+        let i2 = 0;
+        while (i2 < 10) {
+            let house = function () { // функция «дом»
+                console.log(i2); // выводит номер дома
+            };
+            houses2.push(house);
+            i2++;
+        }
+        houses2[0](); // 10 — у нулевого дома номер 10
+        houses2[7](); // 10 — и у седьмого дома номер 10
+
+        // ------------------------------------------------------------------------------------------------
+
+        const houses3 = [];
+        let i3 = 0;
+        while (i3 < 10) {
+            let house = function () { // функция «дом»
+                let houseNumber = i3; // Здесь мы создаём блочную
+                // переменную, которая сохранит значение i3, и именно её значение
+                // попадёт в лексическое окружение функции house.
+                console.log(houseNumber); // выводит номер дома
+            };
+            houses3.push(house);
+            i3++;
+        }
+        houses3[0](); // 0 — у нулевого дома номер 0
+        houses3[7](); // 7 — и у седьмого дома номер 7
+        // ------------------------------------------------------------------------------------------------
+
+    </script>
+
+
+    {#
+    <script src="./spred.js"></script>
+    <script src="./rest.js"></script>
+    <script src="./clean_func.js"></script> #}
+    <script src="./recursion.js"></script>
+
+</body>
+
+</html>
