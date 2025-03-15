@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task3</title>
+</head>
+
+<body>
+
+    <div id="element1">Изменение стиля элемента через заданное время</div>
+    <div id="element2">Изменение стиля элемента через заданное время</div>
+    <div id="element3">Изменение стиля элемента через заданное время</div>
+    <div id="element4">Изменение стиля элемента через заданное время</div>
+    <div id="element5">Изменение стиля элемента через заданное время</div>
+
+    <script>
+
+        function changeStyleDelayed(elementId, delay, color) {
+            setTimeout(() => {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.style.color = color;
+                }
+            }, delay);
+        }
+
+        changeStyleDelayed('element1', 2000, 'red');
+        changeStyleDelayed('element2', 1000, 'green');
+        changeStyleDelayed('element3', 3000, 'blue');
+        changeStyleDelayed('element4', 1500, 'coral');
+        changeStyleDelayed('element5', 2500, 'crimson');
+
+    </script>
+
+</body>
+
+</html>

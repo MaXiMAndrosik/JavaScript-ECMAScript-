@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Веб-интерфейс для отображения списка пользователей с сервера</h1>
+
+    <button class="sort-btn">Отсортировать</button>
+
+    <ul class="users-list"></ul>
+
+
+    <script>
+
+        const usersList = document.querySelector('.users-list');
+
+        const usersRenderList = (users) => {
+            usersList.innerHTML = '';
+            users.forEach(user => {
+                const userItem = document.createElement('li');
+                userItem.innerHTML = `
+                <div>
+                    <p> name: ${user.name} email: ${user.email} </p>
+                </div>`
+                usersList.append(userItem);
+            });
+        }
+
+        const usersSortByNameList = (users) => {
+            const sortedUsers = users.sort((a, b) => a.name > b.name ? 1 : -1);
+            usersRenderList(sortedUsers);
+        }
+
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                usersRenderList(data);
+                const sortEl = document.querySelector('.sort-btn');
+                sortEl.addEventListener('click', () => {
+                    usersSortByNameList(data);
+                })
+            });
+
+    </script>
+
+</body>
+
+</html>
